@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Right-Click OCR Reader</title>
+  <style>
+    body {
+      width: 320px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #f9f9f9, #f1f1f1);
+    }
+    .container {
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header img {
+      width: 32px;
+      height: 32px;
+      margin-right: 10px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0;
+      color: #1a73e8;
+    }
+    .description {
+      background-color: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .instructions {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .step {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+    }
+    .step-number {
+      background-color: #1a73e8;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .step-text {
+      flex: 1;
+    }
+    footer {
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="icons/icon48.png" alt="OCR Reader Icon">
+      <h1>Right-Click OCR Reader</h1>
+    </div>
+    
+    <div class="description">
+      <div class="instructions">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-text">Find an image on any webpage</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-text">Right-click on the image</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-text">Select "Extract Text from Image"</div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-text">View and copy the extracted text</div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      Version 1.0.0 | Right-Click OCR Reader
+    </footer>
+  </div>
+</body>
+</html>
