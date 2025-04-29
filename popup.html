@@ -63,11 +63,40 @@
     .step-text {
       flex: 1;
     }
+    .status {
+      padding: 10px;
+      background-color: #e8f0fe;
+      border-radius: 8px;
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #1a73e8;
+    }
+    .status.error {
+      background-color: #fde7e9;
+      color: #d93025;
+    }
     footer {
       font-size: 12px;
       color: #666;
       text-align: center;
       margin-top: 10px;
+    }
+    .button {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      margin-top: 15px;
+      transition: background-color 0.2s;
+    }
+    .button:hover {
+      background-color: #1658c1;
     }
   </style>
 </head>
@@ -97,11 +126,17 @@
           <div class="step-text">View and copy the extracted text</div>
         </div>
       </div>
+      
+      <div id="extension-status" class="status">Checking extension status...</div>
+      
+      <button id="reset-extension" class="button">Refresh Extension</button>
     </div>
     
     <footer>
       Version 1.0.0 | Right-Click OCR Reader
     </footer>
   </div>
+  
+  <script src="popup.js"></script>
 </body>
 </html>

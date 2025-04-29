@@ -3,13 +3,31 @@ import { createWorker } from 'tesseract.js';
 
 // Create context menu item when extension is installed
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: "extractTextFromImage",
-    title: "Extract Text from Image",
-    contexts: ["image"]
-  });
-  console.log("Context menu item created");
+  createContextMenu();
 });
+
+// Also create context menu when extension is loaded (for developer mode)
+createContextMenu();
+
+// Function to create context menu
+function createContextMenu() {
+  // First remove any existing menu items to prevent duplicates
+  chrome.contextMenus.removeAll(() => {
+    // Then create the new menu item
+    chrome.contextMenus.create({
+      id: "extractTextFromImage",
+      title: "Extract Text from Image",
+      contexts: ["image"]
+    }, () => {
+      // Log success or failure
+      if (chrome.runtime.lastError) {
+        console.error("Error creating context menu:", chrome.runtime.lastError);
+      } else {
+        console.log("Context menu item created successfully");
+      }
+    });
+  });
+}
 
 // Listen for context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
@@ -19,6 +37,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     chrome.tabs.sendMessage(tab.id, {
       action: "extractText",
       imageUrl: info.srcUrl
+    }, (response) => {
+      // Log any errors in message sending
+      if (chrome.runtime.lastError) {
+        console.error("Error sending message to content script:", chrome.runtime.lastError);
+      }
     });
   }
 });
@@ -58,3 +81,11 @@ async function performOCR(imageData) {
 
 // Log extension startup
 console.log("OCR extension background script loaded");
+
+// Listen for extension status checks
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "checkStatus") {
+    sendResponse({ status: "active" });
+  }
+  return true;
+});
