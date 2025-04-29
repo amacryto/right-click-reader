@@ -1,13 +1,18 @@
+// Log when content script is loaded
+console.log("OCR content script loaded");
 
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log("Message received in content script:", request);
   if (request.action === "extractText") {
+    console.log("Extracting text from image URL:", request.imageUrl);
     extractTextFromImage(request.imageUrl);
   }
 });
 
 // Function to extract text from an image
 function extractTextFromImage(imageUrl) {
+  console.log("Starting text extraction for:", imageUrl);
   // Create and show the loading overlay
   const overlay = document.createElement('div');
   overlay.className = 'ocr-overlay';
@@ -107,23 +112,29 @@ function extractTextFromImage(imageUrl) {
   
   document.head.appendChild(style);
   document.body.appendChild(overlay);
+  console.log("Overlay added to page");
   
   // Fetch the image and convert it to base64
+  console.log("Fetching image:", imageUrl);
   fetch(imageUrl)
     .then(response => {
       if (!response.ok) {
         throw new Error('Could not fetch the image');
       }
+      console.log("Image fetched successfully");
       return response.blob();
     })
     .then(blob => {
+      console.log("Converting image to base64");
       const reader = new FileReader();
       reader.onloadend = () => {
+        console.log("Image converted to base64");
         // Send the image data to the background script for OCR
         chrome.runtime.sendMessage({
           action: "performOCR",
           imageData: reader.result
         }, response => {
+          console.log("Received OCR response:", response);
           if (response && response.success) {
             showResult(response.text, overlay);
           } else {
@@ -134,6 +145,7 @@ function extractTextFromImage(imageUrl) {
       reader.readAsDataURL(blob);
     })
     .catch(error => {
+      console.error("Error processing image:", error);
       showError(error.message, overlay);
     });
 }
@@ -191,3 +203,5 @@ function showError(errorMessage, overlay) {
     document.body.removeChild(overlay);
   });
 }
+
+console.log("OCR content script fully initialized");
